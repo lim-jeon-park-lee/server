@@ -7,6 +7,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { request } from 'http';
 import { AppService } from './app.service';
 import { LoginInfoDto } from './auth/auth.dto';
 import { AuthService } from './auth/auth.service';
@@ -27,9 +28,10 @@ export class AppController {
   @UseGuards(LocalAuthGuard)
   @Post('auth/login')
   async login(
+    @Request() request,
     @Body() loginInfo: LoginInfoDto,
   ): Promise<{ accessToken: string }> {
-    return this.authService.login(loginInfo);
+    return this.authService.login(request.user);
   }
 
   @UseGuards(AuthGuard('jwt'))
