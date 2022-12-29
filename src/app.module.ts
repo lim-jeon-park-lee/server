@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { databaseSetting } from './data-source';
 import { ConfigModule } from '@nestjs/config';
+import { LocationsModule } from './locations/locations.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ConfigModule } from '@nestjs/config';
     TypeOrmModule.forRoot(databaseSetting),
     UsersModule,
     AuthModule,
+    LocationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

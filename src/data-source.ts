@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
-import { User } from './entity/User';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -14,7 +13,7 @@ export const databaseSetting: any = {
   database: process.env.DATABASE_TABLE,
   synchronize: true,
   logging: false,
-  entities: [User],
+  entities: [__dirname + '/**/entities/*{.ts,.js}'],
   migrations: [__dirname + '/migration/**/*{.ts,.js}'],
   subscribers: [],
 };
