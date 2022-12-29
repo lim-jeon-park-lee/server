@@ -23,10 +23,12 @@ export class StatusService {
     // 유저의 초대장 정보, 게임 참여 정보 리턴
     const sentChallenges = await this.challengesRepository.findBy({
       hostUserId: userId,
+      accepted: false,
     });
     const receivedChallenges = await this.challengesRepository.find({
       where: {
         invitedUserId: userId,
+        accepted: false,
       },
     });
     // TODO. 만료
