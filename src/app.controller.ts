@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AppService } from './app.service';
+import { LoginInfoDto } from './auth/auth.dto';
 import { AuthService } from './auth/auth.service';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 
@@ -20,14 +21,15 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    console.log('asdf');
     return this.appService.getHello();
   }
 
   @UseGuards(LocalAuthGuard)
   @Post('auth/login')
-  async login(@Request() req): Promise<{ accessToken: string }> {
-    return this.authService.login(req.user);
+  async login(
+    @Body() loginInfo: LoginInfoDto,
+  ): Promise<{ accessToken: string }> {
+    return this.authService.login(loginInfo);
   }
 
   @UseGuards(AuthGuard('jwt'))
