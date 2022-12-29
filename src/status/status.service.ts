@@ -44,7 +44,6 @@ export class StatusService {
       .andWhere('userId = :userId', { userId })
       .orderBy('createdAt', 'DESC')
       .getOne();
-    console.log(currentPlayingGame, lastPlayedGame);
 
     return {
       sentChallenges,
@@ -56,10 +55,10 @@ export class StatusService {
           })
         : null,
       lastPlayedGame: !!lastPlayedGame
-        ? await this.gamesRepository.findOne({
-            where: { id: lastPlayedGame.game.id },
-            relations: { players: true },
-          })
+        ? {
+            gameId: lastPlayedGame.gameId,
+            win: lastPlayedGame.win,
+          }
         : null,
     };
   }

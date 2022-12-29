@@ -3,18 +3,15 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
-  Delete,
   UseGuards,
   Request,
   UnauthorizedException,
 } from '@nestjs/common';
-import { request } from 'http';
+import { ApiOperation } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ChallengesService } from './challenges.service';
 import { CreateChallengeDto } from './dto/create-challenge.dto';
-import { UpdateChallengeDto } from './dto/update-challenge.dto';
 
 @Controller('challenges')
 export class ChallengesController {
@@ -25,6 +22,7 @@ export class ChallengesController {
     return this.challengesService.findAll();
   }
 
+  @ApiOperation({ description: '결투를 신청할 상대방의 userId를 입력하세요.' })
   @UseGuards(JwtAuthGuard)
   @Post()
   create(@Request() request, @Body() createChallengeDto: CreateChallengeDto) {
@@ -41,4 +39,13 @@ export class ChallengesController {
     if (challenge.invitedUserId !== userId) throw new UnauthorizedException();
     await this.challengesService.accept(id);
   }
+
+  // @UseGuards(JwtAuthGuard)
+  // @Post(':id/reject')
+  // async reject(@Request() request, @Param('id') id) {
+  //   const challenge = await this.challengesService.findOne(id);
+  //   const userId = request.user.id;
+  //   if (challenge.invitedUserId !== userId) throw new UnauthorizedException();
+  //   await this.challengesService.reject(id);
+  // }
 }
