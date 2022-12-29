@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { GamePlayer } from '../../game-players/entities/game-player.entity';
 import { Location } from '../../locations/entities/location.entity';
 
 @Entity()
@@ -20,4 +21,7 @@ export class User {
 
   @OneToMany((type) => Location, (location) => location.user)
   locations: Location[];
+
+  @OneToMany((type) => GamePlayer, (gamePlayer) => gamePlayer.user)
+  gamePlayers: GamePlayer[];
 }

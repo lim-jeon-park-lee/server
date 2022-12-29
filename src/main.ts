@@ -1,9 +1,20 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import * as basicAuth from 'express-basic-auth';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // app.use(
+  //   ['/docs', '/docs-json'],
+  //   basicAuth({
+  //     challenge: true,
+  //     users: {
+  //       yourUserName: 'p4ssw0rd',
+  //     },
+  //   }),
+  // );
 
   const config = new DocumentBuilder()
     .setTitle('팔씨름고?')
